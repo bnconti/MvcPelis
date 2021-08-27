@@ -8,17 +8,20 @@ namespace MvcMovie.Controllers
         // 
         // GET: /HelloWorld/
 
-        public string Index()
+        public IActionResult Index()
         {
-            return "La acción/método por defecto al invocar al controlador es Index";
+            return View();
         }
 
         // 
         // GET: /HelloWorld/Welcome/ 
 
-        public string Welcome(string nombre)
+        public IActionResult Welcome(string nombre, int cant = 1)
         {
-            return HtmlEncoder.Default.Encode($"Hola, {nombre}");
+            ViewData["msj"] = $"Hola, {nombre}";
+            ViewData["cant"] = cant;
+
+            return View();
         }
     }
 }
