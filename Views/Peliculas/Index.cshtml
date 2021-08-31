@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MvcPelis.Models.Pelicula>
+﻿@model MvcPelis.Models.PelisGeneroViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -7,47 +7,60 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nueva</a>
 </p>
+
+<form asp-controller="Peliculas" asp-action="Index" method="get">
+    <p>
+        <select asp-for="GeneroSeleccionado" asp-items="Model.Generos">
+            <option value="">Todos</option>
+        </select>
+
+        Título: <input type="text" name="StrBusqueda" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Titulo)
+                @Html.DisplayNameFor(model => model.Peliculas[0].Titulo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaLanzamiento)
+                @Html.DisplayNameFor(model => model.Peliculas[0].FechaLanzamiento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genero)
+                @Html.DisplayNameFor(model => model.Peliculas[0].Genero)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Precio)
+                @Html.DisplayNameFor(model => model.Peliculas[0].Precio)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaLanzamiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Peliculas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaLanzamiento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

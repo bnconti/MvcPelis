@@ -20,10 +20,35 @@ namespace MvcPelis.Controllers
         }
 
         // GET: Peliculas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string generoSeleccionado, string strBusqueda)
         {
-            return View(await _context.Pelicula.ToListAsync());
+            // Use LINQ to get list of genres.
+            IQueryable<string> generoQuery = from p in _context.Pelicula
+                                            orderby p.Genero
+                                            select p.Genero;
+
+            var pelis = from p in _context.Pelicula
+                         select p;
+
+            if (!string.IsNullOrEmpty(strBusqueda))
+            {
+                pelis = pelis.Where(p => p.Titulo.Contains(strBusqueda));
+            }
+
+            if (!string.IsNullOrEmpty(generoSeleccionado))
+            {
+                pelis = pelis.Where(p => p.Genero == generoSeleccionado);
+            }
+
+            var pelisGeneroVM = new PelisGeneroViewModel
+            {
+                Generos = new SelectList(await generoQuery.Distinct().ToListAsync()),
+                Peliculas = await pelis.ToListAsync()
+            };
+
+            return View(pelisGeneroVM);
         }
+
 
         // GET: Peliculas/Details/5
         public async Task<IActionResult> Details(int? id)
