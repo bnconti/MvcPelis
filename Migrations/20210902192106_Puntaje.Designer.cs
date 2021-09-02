@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcPelis.Data;
 
 namespace MvcPelis.Migrations
 {
     [DbContext(typeof(MvcPelisContext))]
-    partial class MvcPelisContextModelSnapshot : ModelSnapshot
+    [Migration("20210902192106_Puntaje")]
+    partial class Puntaje
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +37,8 @@ namespace MvcPelis.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Puntaje")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Puntaje")
+                        .HasColumnType("decimal(2,0)");
 
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
